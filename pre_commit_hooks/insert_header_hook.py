@@ -7,7 +7,7 @@ from typing import Optional, Sequence
 import git
 
 
-def check_header(filename: str, organisation_name: str ,project_name: str):  # noqa C901
+def check_header(filename: str, organisation_name: str, project_name: str):  # noqa C901
     """Check the header & updates the header."""
     filename_only, creator, updator = get_git_log(filename)
     header_text = _get_header(filename_only, creator, updator,
@@ -140,7 +140,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     for filename in args.filenames:
         if check_header(filename=os.path.abspath(filename),
-                        organisation_name= args.organisation,
+                        organisation_name=args.organisation,
                         project_name=args.project):
             print(f'Updated header for {filename}')
             return_code = 1
