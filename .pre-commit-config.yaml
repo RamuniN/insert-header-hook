@@ -1,0 +1,7 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/RamuniN/insert-header-hook
+  rev: 1.0.0
+  hooks:
+  - id: insert-header-hook

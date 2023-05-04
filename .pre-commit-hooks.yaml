@@ -1,0 +1,8 @@
+
+-   id: insert-header-hook
+    name: insert header hook
+    entry: insert-header-hook
+    language: python
+    types: [python]
+    pass_filenames: true
+    always_run: true

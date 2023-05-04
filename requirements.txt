@@ -1,0 +1,8 @@
+pre-commit
+covdefaults
+coverage
+distlib
+pytest
+pytest-env
+re-assert
+git
