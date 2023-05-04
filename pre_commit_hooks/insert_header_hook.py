@@ -7,10 +7,11 @@ from typing import Optional, Sequence
 import git
 
 
-def check_header(filename: str, project_name: str):  # noqa C901
+def check_header(filename: str, organisation_name: str ,project_name: str):  # noqa C901
     """Check the header & updates the header."""
     filename_only, creator, updator = get_git_log(filename)
-    header_text = _get_header(filename_only, creator, updator, project_name).splitlines(True)
+    header_text = _get_header(filename_only, creator, updator,
+                              project_name, organisation_name).splitlines(True)
 
     if filename_only[-3:] != '.py':
         return False
@@ -89,10 +90,10 @@ def get_git_log(filename: str):
     return filename_only, creator, updator
 
 
-def _get_header(filename_only: str = '', creator: dict = {}, updater: dict = {}, project_name: str = ''):
+def _get_header(filename_only: str = '', creator: dict = {}, updater: dict = {}, project_name: str = '', organisation_name: str = ''):
 
-    def header_definition(filename_only, project_name,
-                          created_by, last_update, organisation_name):
+    def header_definition(filename_only, organisation_name, project_name,
+                          created_by, last_update):
         header = """#!python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
@@ -114,9 +115,9 @@ def _get_header(filename_only: str = '', creator: dict = {}, updater: dict = {},
         created_by = f'{creator["date"]} by {creator["author"]} <{creator["email"]}>'
         last_update = f'{updater["date"]} by {updater["author"]} <{updater["email"]}>'
         header = header_definition(
-            filename_only, project_name, created_by, last_update)
+            filename_only, organisation_name, project_name, created_by, last_update)
     else:
-        header = header_definition('', '', '', '')
+        header = header_definition('', '', '', '', '')
 
     return header
 
@@ -139,6 +140,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     for filename in args.filenames:
         if check_header(filename=os.path.abspath(filename),
+                        organisation_name= args.organisation,
                         project_name=args.project):
             print(f'Updated header for {filename}')
             return_code = 1
